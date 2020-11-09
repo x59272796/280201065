@@ -1,13 +1,6 @@
-number = str(input("insert a number"))
-for digits in number:
-  if digits != len(number) - 1 or digits != len(number) - 2 :
-    continue
-  elif digits == len(number) - 2 :
-    tens = int(digits)
-    continue
-  elif digits == len(number) - 1  :
-    ones = int(digits)
-  else  :
-    continue
+number = int(input("insert a number"))
+requiredDigits = number % 100
+tens = requiredDigits // 10
+ones = requiredDigits % 10
 sum = tens + ones
 print(sum)
