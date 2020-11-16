@@ -16,4 +16,4 @@ for x in range(length) :
   if remainder1 == remainder2 :
     sameDigits += 1
   c *= 10
-print("These integers have " + sameDigits + " matching digits. ")
+print("These integers have " + str(sameDigits) + " matching digits. ")
