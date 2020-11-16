@@ -1,5 +1,9 @@
-a = int(input("insert the first number. "))
-b = int(input("insert the second number. "))
+a = int(input("insert the first positive integer. "))
+b = int(input("insert the second positive integer. "))
+while a <= 0 :
+  a = int(input("insert the first positive integer. "))
+while b <= 0 :
+  b = int(input("insert the second positive integer. "))
 c = 10
 sameDigits = 0
 if a > b :
