@@ -6,14 +6,10 @@ if "@" in checkLower :
   for chara in checkLower :
     if status == False :
       if chara == "." :
-        print(chara)
-        print(checkLower.index("."))
-        checkLower.remove(chara)
-        print(checkLower)
+        checkLower = checkLower.replace(chara , "", 1)
       if chara == "@" :
         status = True
 if adress == checkLower :
-  print("They are equal.")
+  print("They are the same e-mail adress. ")
 else :
-  print("they are not equal. ")
-  
+  print("They are not the same e-mail adress. ")
