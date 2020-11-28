@@ -4,7 +4,6 @@ eq1RHS = equation1.split("=")[1]
 eq1LHS = equation1.split("=")[0]
 eq2RHS = equation2.split("=")[1]
 eq2LHS = equation2.split("=")[0]
-term = ""
 LHSList1 = []
 RHSList1 = []
 XList1 = []
@@ -15,14 +14,8 @@ RHSList2 = []
 XList2 = []
 YList2 = []
 constantList2 = []
-coefficientX1 = 0
-coefficientY1 = 0
-coefficientX2 = 0
-coefficientY2 = 0
-constant1 = 0
-constant2 = 0
-simplifiedEq1 = ""
-simplifiedEq2 = ""
+coefficientX1 = coefficientY1 = coefficientX2 = coefficientY2 = constant1 = constant2 = 0
+simplifiedEq1 = simplifiedEq2 = term = ""
 for chara in eq1LHS:
   if chara == "+" or chara == "-":
     if term != "" :
