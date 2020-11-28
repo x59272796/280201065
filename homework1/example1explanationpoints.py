@@ -61,6 +61,7 @@ for element in LHSList1:
     if sign == "+":
       number *= -1
     constantList1.append(number)
+#end of LHS1
 for element in RHSList1:
   sign = element[0]
   if element[-1] == "x" or element[-1] == "X":
@@ -84,6 +85,7 @@ for element in RHSList1:
     if sign == "-":
       number *= -1
     constantList1.append(number)
+#end of RHS1
 for numbers in XList1 :
   coefficientX1 += numbers
 for numbers in YList1 :
@@ -96,6 +98,7 @@ if coefficientY1 < 0 :
 else :
   simplifiedEq1 += ("+" + str(coefficientY1) + "y")
 simplifiedEq1 += ("=" + str(constant1))
+#end of eq1
 term = ""
 for chara in eq2LHS:
   if chara == "+" or chara == "-":
@@ -135,6 +138,7 @@ for element in LHSList2:
     if sign == "+":
       number *= -1
     constantList2.append(number)
+#end of LHS2
 for element in RHSList2:
   sign = element[0]
   if element[-1] == "x" or element[-1] == "X":
@@ -158,6 +162,7 @@ for element in RHSList2:
     if sign == "-":
       number *= -1
     constantList2.append(number)
+#end of RHS2
 for numbers in XList2 :
   coefficientX2 += numbers
 for numbers in YList2 :
@@ -170,6 +175,7 @@ if coefficientY2 < 0 :
 else :
   simplifiedEq2 += ("+" + str(coefficientY2) + "y")
 simplifiedEq2 += ("=" + str(constant2))
+#end of eq2
 constantSolve = constant1
 coefficientXSolve = coefficientX1
 coefficientYSolve = coefficientY1
