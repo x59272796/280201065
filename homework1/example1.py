@@ -1,5 +1,5 @@
-equation1 = str(input("Write the first equation. "))
-equation2 = str(input("Write the second equation. "))
+equation1 = str(input("Enter the first equation:\n"))
+equation2 = str(input("Enter the second equation:\n"))
 eq1RHS = equation1.split("=")[1]
 eq1LHS = equation1.split("=")[0]
 eq2RHS = equation2.split("=")[1]
@@ -170,18 +170,25 @@ if coefficientY2 < 0 :
 else :
   simplifiedEq2 += ("+" + str(coefficientY2) + "y")
 simplifiedEq2 += ("=" + str(constant2))
-constantSolve = constant1
-coefficientXSolve = coefficientX1
-coefficientYSolve = coefficientY1
-coefficientY1 *= coefficientX2
-coefficientY2 *= coefficientX1
-constant1 *= coefficientX2
-constant2 *= coefficientX1
-YFinal = int((constant1 - constant2) / (coefficientY1 - coefficientY2))
-XFinal = int((constantSolve - coefficientYSolve*YFinal) / coefficientXSolve)
-print("Simplified equations: ")
+if coefficientX1 == 0 and coefficientY2 == 0 :
+  YFinal = int(constant1/coefficientY1)
+  XFinal = int(constant2/coefficientX2)
+elif coefficientY1 == 0 and coefficientX2 == 0 :
+  XFinal = int(constant1/coefficientX1)
+  YFinal = int(constant2/coefficientY2)
+else: 
+  constantSolve = constant1
+  coefficientXSolve = coefficientX1
+  coefficientYSolve = coefficientY1
+  coefficientY1 *= coefficientX2
+  coefficientY2 *= coefficientX1
+  constant1 *= coefficientX2
+  constant2 *= coefficientX1
+  YFinal = int((constant1 - constant2) / (coefficientY1 - coefficientY2))
+  XFinal = int((constantSolve - coefficientYSolve*YFinal) / coefficientXSolve)
+print("Equations in the simplified form:")
 print(simplifiedEq1)
 print(simplifiedEq2)
-print("Result: ")
+print("Solution:")
 print("x" + "=" + str(XFinal))
 print("y" + "=" + str(YFinal))
