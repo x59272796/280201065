@@ -170,9 +170,14 @@ elif coefficientY1 == 0 and coefficientX2 == 0 :
   XFinal = int(constant1/coefficientX1)
   YFinal = int(constant2/coefficientY2)
 else: 
-  constantSolve = constant1
-  coefficientXSolve = coefficientX1
-  coefficientYSolve = coefficientY1
+  if coefficientX1 != 0 :
+    constantSolve = constant1
+    coefficientXSolve = coefficientX1
+    coefficientYSolve = coefficientY1
+  else :
+    constantSolve = constant2
+    coefficientXSolve = coefficientX2
+    coefficientYSolve = coefficientY2
   coefficientY1 *= coefficientX2
   coefficientY2 *= coefficientX1
   constant1 *= coefficientX2
