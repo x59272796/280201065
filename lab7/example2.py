@@ -9,5 +9,6 @@ for book in books :
       uniqueChara.append(chara)
   length = len(book)
   unique = len(uniqueChara)
-  bookDict[book] = (length, unique)
+  average = int((length + unique) / 2)
+  bookDict[book] = (length,unique,average)
 print(bookDict)
