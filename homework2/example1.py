@@ -1,6 +1,9 @@
 provincesDict = {}
 provincesFile = open("provinces.txt", "r", encoding = "utf-8")
 vehicleDict = {"CAR": 90, "MOTORCYCLE": 80, "BICYCLE": 25}
+distanceList = []
+distanceDict = {}
+recommendedPlaces = []
 for provinces in provincesFile :
   provinces = provinces.replace("\n", "").split(",")
   provincesDict[provinces[0]] = (float(provinces[1]), float(provinces[2]))
@@ -43,7 +46,23 @@ while True :
 while True :
   vehicle = str(input("Enter travel type:\n")).upper()
   if vehicle in vehicleDict.keys() :
+    print("")
     break
-print("I am calculating the distance between" + departureProvince + " and " + arrivalProvince + " ...")
+print("I am calculating the distance between " + departureProvince + " and " + arrivalProvince + " ...\n")
 distance = round((((provincesDict[arrivalProvince][0] - provincesDict[departureProvince][0])**2 + (provincesDict[arrivalProvince][1] - provincesDict[departureProvince][1])**2)**0.5)*100, 2)
-print("Distance:"+ str(distance))
+print("Distance: "+ str(distance) + " km")
+approxTime = distance/vehicleDict[vehicle]
+hours = int(approxTime)
+minutes = (approxTime - hours)*60
+print("Approximate travel time with " + vehicle + ": " + str(hours) + " hours " + str(int(minutes)) + " minutes" )
+for provinces in provincesDict.keys() :
+  recommendedDistance = round((((provincesDict[provinces][0] - provincesDict[departureProvince][0])**2 + (provincesDict[provinces][1] - provincesDict[departureProvince][1])**2)**0.5)*100, 2)
+  distanceList.append(recommendedDistance)
+  distanceDict[recommendedDistance] = provinces 
+distanceList.sort()
+recommendedPlaces.append(distanceDict[distanceList[1]]) # index 0 gives the departure province itself
+recommendedPlaces.append(distanceDict[distanceList[2]])
+recommendedPlaces.append(distanceDict[distanceList[3]])
+recommendedPlaces.sort()
+print("Recommended places close to " + departureProvince + ":" + ",".join(recommendedPlaces))
+provincesFile.close()
