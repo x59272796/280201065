@@ -17,6 +17,4 @@ def main() :
   firstList = get_rand_list(0,10,5)
   secondList = get_rand_list(0,10,5)
   print(getoverlap(firstList, secondList))
-  print(firstList)
-  print(secondList)
 main()
