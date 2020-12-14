@@ -1,9 +1,12 @@
 def is_prime(a) :
-  status = True
-  for x in range(2,a) :
-    if a % x == 0 :
-      status = False
-      break
+  if a >= 2 :
+    status = True
+    for x in range(2,a) :
+      if a % x == 0 :
+        status = False
+        break
+  else :
+    status = False
   return status
 def print_primes_between(a,b) :
   primeList = []
@@ -16,3 +19,4 @@ def main() :
   second = int(input("Write the second integer. "))
   print_primes_between(first,second)
 main()
+print(is_prime(1))
