@@ -1,4 +1,9 @@
+cheater,104 hours
 yigit,280 hours
+113,281 hours
 bellerophon,286 hours
 heracles,286 hours
 achilles,286 hours
+yigit,286 hours
+ajax,286 hours
+final,286 hours
