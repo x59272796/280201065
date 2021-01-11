@@ -10,7 +10,7 @@ class cylinder() :
     self.radius = radius
 
   def getHeight(self) :
-    return self.radius
+    return self.height
 
   def setHeight(self, height) :
     self.height = height
@@ -25,3 +25,6 @@ radius = 3
 height = 5
 
 sample = cylinder(3,5)
+
+a = sample.getRadius()
+print(a)
