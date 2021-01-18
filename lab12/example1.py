@@ -8,6 +8,6 @@ def SelectionSort(unsorted) :
       unsorted[i], unsorted[minIndex] = unsorted[minIndex], unsorted[i]
   return unsorted
 
-a = [15, 26, 8, 26, 548, 4, 1, 3, 99, 4, 97, 24, 54, 76, 22, 35, 4]
+a = [15, 26, 8, 26, 548, 4, 1, 3, 99, 4, 97, 24, 54, 76, 22, 35, 4, 59, 684]
 a = SelectionSort(a)
 print(a)
