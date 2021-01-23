@@ -27,5 +27,3 @@ radius = 3
 height = 5
 
 sample = cylinder(3,5)
-
-print(sample.getRadius(), sample.getHeight(), sample.getArea(), sample.getVolume())
