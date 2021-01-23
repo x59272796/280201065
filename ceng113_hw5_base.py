@@ -38,6 +38,8 @@ class Gamebot:
         # output: none
         # card is removed from the count_deck of the bot.
         self.count_deck.remove(card) 
+        if len(self.count_deck) == 3 :
+          print("thought youd like this: " + str(self.count_deck))
 
     def update_hand(self,num): 
         # input: num: location of the card to be removed from the bot's hand
@@ -282,7 +284,7 @@ deck = [['b',1],['b',1],['b',1],['b',2],['b',2],['b',3],['b',3],['b',4],
 stack = [[],[]] #0 means black, 1 means white
 trash = []
 lives = 2
-tips = 4
+tips = 3
 shuffle(deck)
 # First hands are dealt.
 comp_hand = [deck[0], deck[1], deck[2]]  # i gave the first 3 cards to the ai. (# TODO: obtain cards (3 cards) from deck)
@@ -328,7 +330,7 @@ while True:
               if len(bot.play_hand) == 3 :
                 bot.update_count_deck(bot.play_hand[-1]) # if player has 3 cards, it means that there were enough cards to append a new one to player. so remove that appended card from the count deck.
               if len(bot.count_deck) == 3 : # if there are only 3 cards left in the count deck, this means that these 3 have to be the cards at bots hand, which means that bot knows its cards completely now. 
-                bot.hand = comp_hand
+                bot.hand = list(comp_hand)
                 print("now i know all my cards")
               lives = try_stack(stackCard, stack, trash, lives)
             else :
@@ -346,7 +348,7 @@ while True:
               if len(bot.play_hand) == 3 : # if player has 3 cards, that means they have appended a new card. remove the appended card from count deck.
                 bot.update_count_deck(bot.play_hand[-1])
               if len(bot.count_deck) == 3 :
-                bot.hand = comp_hand
+                bot.hand = list(comp_hand)
                 print("now i know all my cards")
               tips = discard(discardCard,trash,tips)
             else :
@@ -391,7 +393,7 @@ while True:
               bot.update_hand(location)
               bot.update_count_deck(botStackCard)
               if len(bot.count_deck) == 3 :
-                bot.hand = comp_hand
+                bot.hand = list(comp_hand)
                 print("now i know all my cards")
               lives = try_stack(botStackCard, stack, trash, lives)
             else :
@@ -400,7 +402,7 @@ while True:
               bot.update_hand(discardLocation)
               bot.update_count_deck(botDiscardCard)
               if len(bot.count_deck) == 3 :
-                bot.hand = comp_hand
+                bot.hand = list(comp_hand)
                 print("now i know all my cards")
               tips = discard(botDiscardCard, trash, tips)
               
