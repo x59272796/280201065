@@ -1,2 +1,2 @@
 language = "python3"
-run = "python ceng113_hw5_base.py"
+run = "python lab11/example3.py"

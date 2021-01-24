@@ -2,6 +2,7 @@
 # a class attribute named self.known_play_hand, which allows to track players hand as player knows it. 
 # a class function named update_known_play_hand, which updates the known player hand when bot gives a tip.
 # a function named getMostRepeated, which gives statistics about the number of cards and their frequency, so that bot can use these statistics while giving a tip.
+
 # more explanations of these and more are in the comments next to the code. ive tried to explain my bonus implemenatations in comments too. i have also left the original comments telling us what to do.
 # there are also 4 additional options at lines 311, 312, 313 and 314; all enabled by default. first one allows player to see their own known hand on each turn (if they dont feel like constantly keeping track of their hand themselves), second one allows the player to skip their turn on when they have no cards and tips, the third one allows the player to see bots hand as it knows on each turn so player can tip accordingly, and the last one allows bot to comment when its stacking, discarding or when it has figured out his hand with count deck in consideration. these options may be enabled to enhance the gameplay. I really recommend enabling them all as they make game clearer. Or if you would like to get a more commentless gameplay like in the initial code for grading, they may be disabled.
 # i tried implementing bonuses in places where we were stated that we may implement bonuses. they are explained in the beginning of a function or statement and they start with "bonus:"
