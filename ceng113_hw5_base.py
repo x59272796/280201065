@@ -1,3 +1,11 @@
+# functions and attributes i have added: 
+# a class attribute named self.known_play_hand, which allows to track players hand as player knows it. 
+# a class function named update_known_play_hand, which updates the known player hand when bot gives a tip.
+# a function named getMostRepeated, which gives statistics about the number of cards and their frequency, so that bot can use these statistics while giving a tip.
+# more explanations of these and more are in the comments next to the code. ive tried to explain my bonus implemenatations in comments too. i have also left the original comments telling us what to do.
+# there are also 4 additional options at lines 311, 312, 313 and 314; all enabled by default. first one allows player to see their own known hand on each turn (if they dont feel like constantly keeping track of their hand themselves), second one allows the player to skip their turn on when they have no cards and tips, the third one allows the player to see bots hand as it knows on each turn so player can tip accordingly, and the last one allows bot to comment when its stacking, discarding or when it has figured out his hand with count deck in consideration. these options may be enabled to enhance the gameplay. I really recommend enabling them all as they make game clearer. Or if you would like to get a more commentless gameplay like in the initial code for grading, they may be disabled.
+# i tried implementing bonuses in places where we were stated that we may implement bonuses. they are explained in the beginning of a function or statement and they start with "bonus:"
+
 import random
 
 class Gamebot:
@@ -38,8 +46,7 @@ class Gamebot:
         # output: none
         # card is removed from the count_deck of the bot.
         self.count_deck.remove(card) 
-        if len(self.count_deck) == 3 :
-          print("thought youd like this: " + str(self.count_deck))
+ 
 
     def update_hand(self,num): 
         # input: num: location of the card to be removed from the bot's hand
@@ -119,23 +126,20 @@ class Gamebot:
                 if len(self.stack[stackIndex]) == 0 : # check if the stack is an empty stack
                   if self.hand[cardIndex][1] == 1 : # if the stack is empty, and a same coloured 1 card has been found, directly stack it to the empty stack
                     location = cardIndex + 1
-                    print("found, stacking 1 to empty stack")
                     found = True
                     break
                 elif self.hand[cardIndex][1] == self.stack[stackIndex][-1][1] + 1 : # if stacks are not empty, and if a card with one higher number than the last card in the stack, stack that card
                   location = cardIndex + 1
-                  print("found, stacking the next one")
                   found = True
                   break
-              elif len(self.stack[0]) == len(self.stack[1]) : # if both stacks have equal number of cards
+              elif len(self.stack[0]) == len(self.stack[1]) : # bonus: if both stacks have equal number of cards
                 if self.hand[cardIndex][1] == len(self.stack[0]) + 1 : # and if we found a card which has a number of 1 + size of stack, consider appending it because its a guaranteed stack.(for instance, both stacks have 1 cards and we found a number 2 card, this will definetly stack.)
                   location = cardIndex + 1
                   found = True
                   break
-              elif len(self.stack[0]) >= 3 and len(self.stack[1]) >= 3 and self.hand[cardIndex][1] == 4 : # if at least 3 cards have been stacked to both stacks, and a 4 card is found, bot will stack that card since there could be only 4 cards after that and there are only one 4 cards for each color
+              elif len(self.stack[0]) >= 3 and len(self.stack[1]) >= 3 and self.hand[cardIndex][1] == 4 : # bonus: if at least 3 cards have been stacked to both stacks, and a 4 card is found, bot will stack that card since there could be only 4 cards after that and there are only one 4 cards for each color
                 location = cardIndex + 1
                 found = True
-                print("this is the case where only 4s remain, go my man")
                 break
             if found :
               break
@@ -150,35 +154,30 @@ class Gamebot:
         # BONUS: Smarter decision-making algorithms can be implemented.
 
         # it checks if one of the cards are already in a stack, and if so, discards it, other than that it tries to find the card with the minimum information and discard that.
-        # bonus: bot avoids discarding a 4 card, since they are rare. bot also discards a numbered card if it is already in both stacks (first elif statement). additionally, if one stack is complete and if a card with the color of that stack is found, it will be discarded. (2nd and 3rd elif statements). bot will mostly try discarding the oldest card in its hand.
+        # bonus: bot avoids discarding a 4 card, since they are rare. bot also discards a numbered card if it is already in both stacks (first elif statement). additionally, if one stack is complete and if a card with the color of that stack is found, it will be discarded. (2nd and 3rd elif statements). bot will mostly try discarding the oldest card in its hand if it is undecided on multiple multiple options or if it is completely clueless on what to discard.
         card2discard = 0
         determined = False # we will use this in the if statement at the bottom, to check if a card to discard is determined
         for index in range(len(self.hand)) :
           if self.hand[index] in self.stack[0] or self.hand[index] in self.stack[1] :  # if a card thats already in a stack is found, stop and discard it immediately
             card2discard = index
             break
-          elif self.hand[index][1] <= min(len(self.stack[0]), len(self.stack[1])) and self.hand[index][1] != -1 : # if a card with a number thats less than the number of cards in the stack with the least cards, that card is a guaranteed discard.  (for instance, discard any 1 or 2 cards when white stack has 3 cards and black stack has 2 cards.)
+          elif self.hand[index][1] <= min(len(self.stack[0]), len(self.stack[1])) and self.hand[index][1] != -1 : # bonus: if a card with a number thats less than the number of cards in the stack with the least cards, that card is a guaranteed discard.  (for instance, discard any 1 or 2 cards when white stack has 3 cards and black stack has 2 cards.)
             card2discard = index
-            print("omgggg less number omgggg")
             break
-          elif len(self.stack[0]) == 4 and self.hand[index][0] == "b" : # if black stack is complete and bot finds a black card, its a guaranteed discard.
+          elif len(self.stack[0]) == 4 and self.hand[index][0] == "b" : # bonus: if black stack is complete and bot finds a black card, its a guaranteed discard.
             card2discard = index
-            print("found already completed black card, discarding") #works
             break
-          elif len(self.stack[1]) == 4 and self.hand[index][0] == "w" : # if white stack is complete and bot finds a white card, its a guaranteed discard.
+          elif len(self.stack[1]) == 4 and self.hand[index][0] == "w" : # bonus: if white stack is complete and bot finds a white card, its a guaranteed discard.
             card2discard = index
-            print("found already completed white card, discarding") #workds
             break
           elif self.hand[index] == ["!", -1] and self.hand[card2discard] != ["!", -1] : # if a completely unknown card is found, directly consider discarding it
             card2discard = index
             determined = True # bot has determined on a card to discard at least once
           elif (not self.hand[index][0].isalpha() or self.hand[index][1] not in [1,2,3,4]) and self.hand[card2discard] != ["!", -1] : # if a card with ! or -1 as values is found, consider discarding it if the current card to discard is not completely unknown
-            if (not determined) or self.hand[index][1] != 4 : # since cards numbered 4 are very rare, bot will try to avoid discarding it
-              if (not determined) or self.hand[card2discard][1] == 4 : # if we havent found a minimum information card before or the card we are trying to discard is a 4 card, discard this minimum information card.
+            if (not determined) or self.hand[index][1] != 4 : # bonus: since cards numbered 4 are very rare, bot will try to avoid discarding it and bot will try to pick the oldest minimum information card.
+              if (not determined) or self.hand[card2discard][1] == 4 : # if we havent found a minimum information card before or the card we are trying to discard is a 4 card, discard this minimum information card. i check if bot has determined on a card twice because i want the bot to discard the oldest minmimum knowledge card, and avoid discarding number 4 cards. 
                 card2discard = index
-                print("first no knowledge found as " + str(card2discard))
                 determined = True
-        print("ive found the discard location as " + str(card2discard + 1))
         return card2discard + 1
     
     def update_known_play_hand(self, num) : # this is a function ive come up with, it will update the player hand as we know it, like how update_hand class function works.
@@ -289,7 +288,6 @@ def getMostRepeated(sampleList, knownList) : # this is a function ive added, it 
       while knownList[index][1] != -1 or firstRun :
         index = random.randint(0,len(sampleList) - 1) 
         firstRun = False
-        print("are ya winnin son")
       mostRepeated.append([index, sampleList[index]])
   return mostRepeated
 
@@ -310,15 +308,19 @@ bot = Gamebot(play_hand,stack)  # Gamebot object is created.
 turn = 0                        # 0 means player, 1 means computer. So for each game, the player starts.
 play_hand_changed = False # i will use this to know if the players cards have changed or not since the last tip bot gave.
 BotTip = "" # a placeholder for the tip that bot gives since i check it down there without recieving it first.
+
+seePlayerHand = True # extra, if player is feeling too lazy to keep track of their cards, they may change this to True to print the known player hand on each turn.
+switch_turns_when_no_cardsntips = True # extra, if player is both out of tips and cards, this allows to directly skip the turn to bot while trying to give a tip while there are 0 tips left.
+seeBotsKnownHand = True # extra, allows the player to see bots hand as it knows it on each turn, so player can tip accordingly.
+bot_comments_enabled = True # extra, if enabled, bot will comment on its status while stacking, discarding and when it figures out its cards. makes gameplay a bit easier in my opinion. there are still 2 messages bot will say to the player regardless of the setting: if it has no more new tips to give, and if it has no cards and no new tips to give.
+
 while True:
-    print("debug: player has " +str(bot.play_hand) + " but you think that you have " + str(bot.known_play_hand))
-    print("debug: bot has " + str(comp_hand) + " but it thinks that it has " + str(bot.hand))
-    if stack == bot.stack :
-      print("yes")
-    else :
-      print("wellp, break")
-      break
     if turn == 0:
+        if seePlayerHand == True : # extra, if player feels lazy, this statement prints the known player hand on each turn.
+          print("Player's hand: " + str(bot.known_play_hand))
+        if seeBotsKnownHand == True : # extra, if player wants to see bots known hand on each turn so they can tip accordingly.
+          print("Bot thinks that it has: " + str(bot.hand))
+
         inp = input("Your turn:")
         if inp == 'v':
             print("Computer's hand:", comp_hand)
@@ -333,12 +335,16 @@ while True:
                 turn = 1        # Switch turns.
                 # Take a tip from the player, give it to the bot, update and print the number of tips.
                 tip = str(input("Write the tip.")).split(",")
-                while len(tip) < 2 or len(tip) > 4 or not tip[-1].isalnum() :
+                while len(tip) < 2 or len(tip) > 4 or not tip[-1].isalnum() : # a little extra tip check that prevents the tip from being wildly wrong.
                   tip = str(input("Write the tip properly again.")).split(",")
                 tips -= 1
                 bot.get_tip(tip)
+                print("Remaining tips:" + str(tips))
+
             else:
                 print("Not possible! No tips left!")
+                if switch_turns_when_no_cardsntips == True and tips < 1 and len(bot.play_hand) < 1 : # extra statement, if this option is enabled, it will allow the player to skip turns when they have no cards and tips.
+                  turn = 1
         elif inp == "s":
             turn = 1        # Switch turns.
             # Take the location of the card to be stacked from the player,
@@ -352,7 +358,8 @@ while True:
                 bot.update_count_deck(bot.play_hand[-1]) # if player has 3 cards, it means that there were enough cards to append a new one to player. so remove that appended card from the count deck.
               if len(bot.count_deck) == 3 : # if there are only 3 cards left in the count deck, this means that these 3 have to be the cards at bots hand, which means that bot knows its cards completely now. 
                 bot.hand = list(comp_hand)
-                print("now i know all my cards")
+                if bot_comments_enabled :
+                  print("Bot: Now I know all of my cards, since the only remaining cards have to be the ones in my hand.")
               lives = try_stack(stackCard, stack, trash, lives)
             else :
               print("You have no cards to stack!")
@@ -370,7 +377,8 @@ while True:
                 bot.update_count_deck(bot.play_hand[-1])
               if len(bot.count_deck) == 3 :
                 bot.hand = list(comp_hand)
-                print("now i know all my cards")
+                if bot_comments_enabled :
+                  print("Bot: Now I know all of my cards, since the only remaining cards have to be the ones in my hand.")
               tips = discard(discardCard,trash,tips)
             else :
               print("You have no cards to discard!")
@@ -389,15 +397,14 @@ while True:
             # Take a tip from the bot. Update the number of tips. Print both
             # the given tip by the bot and the updated number of tips.
 
-            # bonus: like i said in the tip giving part, a smarter rule set ive implemented to the tipping algorithm is the bot stops giving tips when there are no tips to give anymore, it tries to stack or discard instead. it also checks if the player hand has changed, and if so it gives new tips after all tips were given to the previous player cards.
-            # bonus: if there is only 3 cards in the count deck and since that means these 3 cards are at bots hand, bot will know the cards at its hand.
+            # bonus: like i said in the tip giving part, a smarter rule set ive implemented to the tipping algorithm is the bot stops giving tips when there are no tips to give anymore, it tries to stack or discard instead. it also checks if the player hand has changed, and if so it gives new tips after all tips were given to the previous player cards. if there is only 3 cards in the count deck and since that means these 3 cards are at bots hand, bot will know the cards at its hand. if bot has no cards and is out of tips to give, it will say so to the player and will not do anything.
             BotTip = bot.give_tip()
             play_hand_changed = False # since bot looked at the players hand and gave tips accordingly, this will stay false until players hand changes, so bot can come up with new tips.
-            print(BotTip)
-            if BotTip != "I have given all the possible tips." : # if a proper tip was given, decrease tips by one.
+            print("Bot gave you a tip: " + str(BotTip))
+            if BotTip != "I have given all the possible tips." : # if a tip was indeed given, decrease tips by one.
               tips -= 1
             else :
-              print("No tips were deducted.") # this is more optional. it lets the player know that they currently know all of their cards, and gives them a turn again to think accordingly, without deducting tips since bot hasnt given a tip technically.
+              print("No tips were deducted.") # bonus: this is more optional. it lets the player know that they currently know all of their cards, and gives them a turn again to think accordingly, without deducting tips since bot hasnt given a tip technically.
             print("Remaining tips: " + str(tips))
         else:
             # Check if bot can pick a card to stack.
@@ -407,15 +414,16 @@ while True:
             if len(bot.hand) > 0 :
             # if bot is able to stack, it will try to stack. else, it will pick a card to discard.
               location = bot.pick_stack()
-              print("i found the stack location as " + str(location))
               if location != -1 : # if a card to stack was found
                 botStackCard = update_hand(comp_hand, deck, location)
-                print("im going to stack " + str(botStackCard))
                 bot.update_hand(location)
                 bot.update_count_deck(botStackCard)
                 if len(bot.count_deck) == 3 :
                   bot.hand = list(comp_hand)
-                  print("now i know all my cards")
+                  if bot_comments_enabled :
+                    print("Bot: Now I know all of my cards, since the only remaining cards have to be the ones in my hand.")
+                if bot_comments_enabled :
+                  print("Bot: I will try stacking card " + str(location))
                 lives = try_stack(botStackCard, stack, trash, lives)
               else :
                 discardLocation = bot.pick_discard()
@@ -424,9 +432,12 @@ while True:
                 bot.update_count_deck(botDiscardCard)
                 if len(bot.count_deck) == 3 :
                   bot.hand = list(comp_hand)
-                  print("now i know all my cards")
+                  if bot_comments_enabled :
+                    print("Bot: Now I know all of my cards, since the only remaining cards have to be the ones in my hand.")
+                if bot_comments_enabled :
+                  print("Bot: I will discard my card " + str(discardLocation))
                 tips = discard(botDiscardCard, trash, tips)
-            else : # if bot cannot tip, and doesnt have any cards to stack or discard, this will be printed instead of any action.
+            else : # bonus: if bot cannot tip, and doesnt have any cards to stack or discard, this will be printed instead of any action. i think this would be a very very rare case.
               print("Bot: I cannot tip and I have no cards remaining.")
               
         turn = 0        # Switch turns.
