@@ -5,7 +5,10 @@ def BinarySearch(unsorted, num) :
   location = -1
   mid = len(unsorted) // 2
   if len(unsorted) <= 1 :
-    location = -1
+    if len(unsorted) == 1 and unsorted[0] == num :
+      location = 0
+    else :
+      location = -1
   else :
     if num > unsorted[mid] :
       location = BinarySearch(unsorted[mid:], num)
@@ -17,6 +20,6 @@ def BinarySearch(unsorted, num) :
       location = mid
   return location
 
-my_list = [-4, 2, 7, 8, 12,22, 25, 27, 36, 42, 50, 56, 68, 85, 91, 98]
+my_list = [20,30,30,30,40]
 
-print(BinarySearch(my_list, 36))
+print(BinarySearch(my_list, 30))
